@@ -116,6 +116,13 @@ public class Principal extends javax.swing.JFrame {
         btn_CE_r = new javax.swing.JButton();
         btn_CanAEV = new javax.swing.JButton();
         jd_Ccancion = new javax.swing.JDialog();
+        jLabel18 = new javax.swing.JLabel();
+        tf_nomCan = new javax.swing.JTextField();
+        tf_segCan = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        btn_CC = new javax.swing.JButton();
+        btn_CC_r = new javax.swing.JButton();
+        pgb_CC = new javax.swing.JProgressBar();
         jd_admi = new javax.swing.JDialog();
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
@@ -612,15 +619,66 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btn_CE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
+        jLabel18.setText("Nombre de la cancion");
+
+        jLabel19.setText("Cuanto dura la cancion en segundos");
+
+        btn_CC.setText("Crear cancion");
+        btn_CC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CCMouseClicked(evt);
+            }
+        });
+
+        btn_CC_r.setText("Regresar");
+        btn_CC_r.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_CC_rMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_CcancionLayout = new javax.swing.GroupLayout(jd_Ccancion.getContentPane());
         jd_Ccancion.getContentPane().setLayout(jd_CcancionLayout);
         jd_CcancionLayout.setHorizontalGroup(
             jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
+            .addGroup(jd_CcancionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_CcancionLayout.createSequentialGroup()
+                        .addGroup(jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(tf_nomCan, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 482, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CcancionLayout.createSequentialGroup()
+                        .addComponent(btn_CC_r)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_CC))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CcancionLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel19)
+                                .addComponent(tf_segCan, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pgb_CC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jd_CcancionLayout.setVerticalGroup(
             jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGroup(jd_CcancionLayout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_nomCan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_segCan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addComponent(pgb_CC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_CcancionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_CC)
+                    .addComponent(btn_CC_r)))
         );
 
         jMenu3.setText("Acciones");
@@ -1066,6 +1124,47 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_CanAEVMouseClicked
 
+    private void btn_CCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CCMouseClicked
+        boolean ver = true;
+        int x = 0;
+        for (int i = 0; i < bandas.size(); i++) {
+            if (tf_user.getText().equals(bandas.get(i).getUsuario())
+                    && pf_pw.getText().equals(bandas.get(i).getContraseña())) {
+                ver = false;
+                x = i;
+                break;
+            }
+        }
+        for (int i = 0; i < solistas.size(); i++) {
+            if (tf_user.getText().equals(solistas.get(i).getUsuario())
+                    && pf_pw.getText().equals(solistas.get(i).getContraseña())) {
+                ver = true;
+                x = i;
+                break;
+            }
+        }
+        canciones.add(new Cancion(tf_nomCan.getText(), Integer.parseInt(tf_segCan.getText())));
+        if(ver){
+            solistas.get(x).getCanciones().add(canciones.get(canciones.size()-1));
+        }else{
+            bandas.get(x).getCanciones().add(canciones.get(canciones.size()-1));
+        }
+        
+        hc = new Hilocrear(pgb_Ucrear, jd_RCUsuario, 8);
+        hc.start();
+        tf_nomCan.setText("");
+        tf_segCan.setText("");
+    }//GEN-LAST:event_btn_CCMouseClicked
+
+    private void btn_CC_rMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CC_rMouseClicked
+        jd_Ccancion.setModal(false);
+        jd_Ccancion.setVisible(false);
+        jd_Artista.setModal(true);
+        jd_Artista.pack();
+        jd_Artista.setLocationRelativeTo(this);
+        jd_Artista.setVisible(true);
+    }//GEN-LAST:event_btn_CC_rMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1105,6 +1204,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_Acrear;
     private javax.swing.JButton btn_Acrear_r;
     private javax.swing.JButton btn_Aregistrar;
+    private javax.swing.JButton btn_CC;
+    private javax.swing.JButton btn_CC_r;
     private javax.swing.JButton btn_CE;
     private javax.swing.JButton btn_CE_r;
     private javax.swing.JButton btn_CanAEV;
@@ -1128,6 +1229,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1171,6 +1274,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTable jt_SimCan;
     private javax.swing.JPasswordField pf_pw;
     private javax.swing.JProgressBar pgb_Acrear;
+    private javax.swing.JProgressBar pgb_CC;
     private javax.swing.JProgressBar pgb_Ccancionesp;
     private javax.swing.JProgressBar pgb_SimCE;
     private javax.swing.JProgressBar pgb_Ucrear;
@@ -1184,6 +1288,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField tf_capacidad;
     private javax.swing.JTextField tf_ciudad;
     private javax.swing.JTextField tf_lugar;
+    private javax.swing.JTextField tf_nomCan;
+    private javax.swing.JTextField tf_segCan;
     private javax.swing.JTextField tf_user;
     // End of variables declaration//GEN-END:variables
     ArrayList<Usuario> usuarios = new ArrayList();
