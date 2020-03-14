@@ -1,8 +1,9 @@
 package lab.pkg7_alessandroreyes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Artista {
+public class Artista implements Serializable{
     private String usuario, contraseña, nombre, genero;
     private ArrayList<Cancion> canciones = new ArrayList();
 
@@ -55,7 +56,7 @@ public class Artista {
 
     @Override
     public String toString() {
-        return "Usuario: " + usuario + ", nombre: " + nombre;
+        return nombre;
     }
     
     

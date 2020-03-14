@@ -9,18 +9,18 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class SolistaAdmi {
-    private ArrayList<Artista> listaSolista = new ArrayList();
+    private ArrayList<Solista> listaSolista = new ArrayList();
     private File archivo = null;
     
     public SolistaAdmi(String path) {
         archivo = new File(path);
     }
 
-    public ArrayList<Artista> getListaArtista() {
+    public ArrayList<Solista> getListaArtista() {
         return listaSolista;
     }
 
-    public void setListaArtista(ArrayList<Artista> listaParadas) {
+    public void setListaArtista(ArrayList<Solista> listaParadas) {
         this.listaSolista = listaParadas;
     }
 
@@ -32,7 +32,7 @@ public class SolistaAdmi {
         this.archivo = archivo;
     }
     
-    public void setArtista(Artista a){
+    public void setArtista(Solista a){
         listaSolista.add(a);
     }
     
@@ -40,14 +40,14 @@ public class SolistaAdmi {
     public void cargarArchivo() {
         try {            
             listaSolista = new ArrayList();
-            Artista temp;
+            Solista temp;
             if (archivo.exists()) {
                 FileInputStream entrada
                     = new FileInputStream(archivo);
                 ObjectInputStream objeto
                     = new ObjectInputStream(entrada);
                 try {
-                    while ((temp = (Artista) objeto.readObject()) != null) {
+                    while ((temp = (Solista) objeto.readObject()) != null) {
                         listaSolista.add(temp);
                     }
                 } catch (EOFException e) {

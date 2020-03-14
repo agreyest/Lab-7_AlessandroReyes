@@ -1,8 +1,9 @@
 package lab.pkg7_alessandroreyes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Solista extends Artista{
+public class Solista extends Artista implements Serializable{
     private int Edad;
 
     public Solista(int Edad, String usuario, String contraseña, String nombre, String genero) {

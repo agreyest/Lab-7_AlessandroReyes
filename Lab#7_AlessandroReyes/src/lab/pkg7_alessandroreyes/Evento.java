@@ -1,9 +1,10 @@
 package lab.pkg7_alessandroreyes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Evento {
+public class Evento implements Serializable{
     private Date fecha; 
     private String Ciudad, Lugar;
     private int Capacidad;

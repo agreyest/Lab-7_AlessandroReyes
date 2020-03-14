@@ -1,8 +1,9 @@
 package lab.pkg7_alessandroreyes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Usuario {
+public class Usuario implements Serializable{
     private String usuario, contraseña, nombre; 
     int edad;
     ArrayList<Evento> eventos = new ArrayList();
