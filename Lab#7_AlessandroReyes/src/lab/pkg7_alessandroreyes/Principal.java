@@ -60,8 +60,8 @@ public class Principal extends javax.swing.JFrame {
         jd_Artista = new javax.swing.JDialog();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jmi_CC = new javax.swing.JMenuItem();
+        jmi_CE = new javax.swing.JMenuItem();
         jd_Admin = new javax.swing.JDialog();
         jd_RCartista = new javax.swing.JDialog();
         jLabel8 = new javax.swing.JLabel();
@@ -111,7 +111,7 @@ public class Principal extends javax.swing.JFrame {
         jl_CE = new javax.swing.JList<>();
         btn_CcancionespEV = new javax.swing.JButton();
         btn_CE = new javax.swing.JButton();
-        jpb_CEvento = new javax.swing.JProgressBar();
+        pgb_CEvento = new javax.swing.JProgressBar();
         pgb_Ccancionesp = new javax.swing.JProgressBar();
         btn_CE_r = new javax.swing.JButton();
         btn_CanAEV = new javax.swing.JButton();
@@ -201,11 +201,21 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Acciones");
 
-        jMenuItem1.setText("Crear cancion");
-        jMenu2.add(jMenuItem1);
+        jmi_CC.setText("Crear cancion");
+        jmi_CC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_CCActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmi_CC);
 
-        jMenuItem2.setText("Crear evento");
-        jMenu2.add(jMenuItem2);
+        jmi_CE.setText("Crear evento");
+        jmi_CE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_CEActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jmi_CE);
 
         jMenuBar2.add(jMenu2);
 
@@ -572,7 +582,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CeventosLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jpb_CEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pgb_CEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_CeventosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_CcancionespEV)
@@ -612,7 +622,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pgb_Ccancionesp, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jpb_CEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pgb_CEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jd_CeventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_CE_r, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
@@ -1027,7 +1037,14 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_sim_rMouseClicked
 
     private void btn_ejecutarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ejecutarMouseClicked
-        // TODO add your handling code here:
+        if(jl_SimEv.getSelectedIndex() >=0){
+            int tot=0;
+            for (int i = 0; i < eventos.get(jl_SimEv.getSelectedIndex()).getSetlist().size(); i++) {
+                tot = tot + eventos.get(jl_SimEv.getSelectedIndex()).getSetlist().get(i).getDuración();
+            }
+            ht = new HiloTabka(pgb_SimCE, jd_simulacion, tot, jt_SimCan);
+            ht.start();
+        }
     }//GEN-LAST:event_btn_ejecutarMouseClicked
 
     private void btn_CcancionespEVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CcancionespEVMouseClicked
@@ -1068,7 +1085,7 @@ public class Principal extends javax.swing.JFrame {
                 Integer.parseInt(tf_capacidad.getText())));
         eventos.get(eventos.size()-1).setSetlist(setlist);
         setlist = new ArrayList();
-        hc = new Hilocrear(pgb_Ucrear, jd_RCUsuario, 8);
+        hc = new Hilocrear(pgb_CEvento, jd_Ceventos, 8);
         hc.start();
 
         jdc_fecha.setDate(new Date());
@@ -1150,7 +1167,7 @@ public class Principal extends javax.swing.JFrame {
             bandas.get(x).getCanciones().add(canciones.get(canciones.size()-1));
         }
         
-        hc = new Hilocrear(pgb_Ucrear, jd_RCUsuario, 8);
+        hc = new Hilocrear(pgb_CC, jd_Ccancion, 8);
         hc.start();
         tf_nomCan.setText("");
         tf_segCan.setText("");
@@ -1163,7 +1180,28 @@ public class Principal extends javax.swing.JFrame {
         jd_Artista.pack();
         jd_Artista.setLocationRelativeTo(this);
         jd_Artista.setVisible(true);
+        
+        tf_nomCan.setText("");
+        tf_segCan.setText("");
     }//GEN-LAST:event_btn_CC_rMouseClicked
+
+    private void jmi_CCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_CCActionPerformed
+        jd_Artista.setModal(false);
+        jd_Artista.setVisible(false);
+        jd_Ccancion.setModal(true);
+        jd_Ccancion.pack();
+        jd_Ccancion.setLocationRelativeTo(this);
+        jd_Ccancion.setVisible(true);
+    }//GEN-LAST:event_jmi_CCActionPerformed
+
+    private void jmi_CEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_CEActionPerformed
+        jd_Artista.setModal(false);
+        jd_Artista.setVisible(false);
+        jd_Ceventos.setModal(true);
+        jd_Ceventos.pack();
+        jd_Ceventos.setLocationRelativeTo(this);
+        jd_Ceventos.setVisible(true);
+    }//GEN-LAST:event_jmi_CEActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1245,8 +1283,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1265,16 +1301,18 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JList<String> jl_CE;
     private javax.swing.JList<String> jl_SimEv;
     private javax.swing.JList<String> jl_UArtistas;
+    private javax.swing.JMenuItem jmi_CC;
+    private javax.swing.JMenuItem jmi_CE;
     private javax.swing.JMenuItem jmi_EliB;
     private javax.swing.JMenuItem jmi_EliS;
     private javax.swing.JMenuItem jmi_EliU;
     private javax.swing.JMenuItem jmi_sim;
-    private javax.swing.JProgressBar jpb_CEvento;
     private javax.swing.JSpinner js_Uedad;
     private javax.swing.JTable jt_SimCan;
     private javax.swing.JPasswordField pf_pw;
     private javax.swing.JProgressBar pgb_Acrear;
     private javax.swing.JProgressBar pgb_CC;
+    private javax.swing.JProgressBar pgb_CEvento;
     private javax.swing.JProgressBar pgb_Ccancionesp;
     private javax.swing.JProgressBar pgb_SimCE;
     private javax.swing.JProgressBar pgb_Ucrear;
@@ -1300,6 +1338,7 @@ public class Principal extends javax.swing.JFrame {
     ArrayList<Cancion> canciones = new ArrayList();
     Hilocrear hc;
     HiloLista hl;
+    HiloTabka ht;
     int num;
     boolean art = false;
     ArrayList<Cancion> setlist = new ArrayList();

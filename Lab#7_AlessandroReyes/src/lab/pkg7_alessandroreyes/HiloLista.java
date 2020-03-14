@@ -7,7 +7,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 
-public class HiloLista {
+public class HiloLista extends Thread{
     private JProgressBar barra;
     private boolean avanzar;
     private boolean vive;
@@ -19,7 +19,7 @@ public class HiloLista {
     public HiloLista(JProgressBar barra, JDialog jd, int seg, JList list) {
         this.barra = barra;
         this.barra.setValue(0);
-        this.barra.setMaximum(5);
+        this.barra.setMaximum(seg);
         this.list = list;
         this.seg = seg;
         this.avanzar = true;
